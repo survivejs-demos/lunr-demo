@@ -6,7 +6,8 @@
     "deploy": "gh-pages -d build",
     "stats": "webpack --profile --json > stats.json",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "generate_index": "node ./utils/generate_index.js > app/search_index.json"
   },
   "keywords": [
     "webpack",
@@ -27,6 +28,7 @@
     "html-webpack-plugin": "^2.15.0",
     "html-webpack-template": "^4.0.0",
     "npm-install-webpack-plugin": "^3.0.0",
+    "remove-markdown": "^0.1.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
