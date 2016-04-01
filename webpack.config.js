@@ -47,7 +47,7 @@ const common = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'node_modules/html-webpack-template/index.ejs',
-      title: 'Kanban app',
+      title: 'Lunr demo',
       appMountId: 'app',
       inject: false
     })
