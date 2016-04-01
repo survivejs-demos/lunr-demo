@@ -27,6 +27,7 @@
     "gh-pages": "^0.11.0",
     "html-webpack-plugin": "^2.15.0",
     "html-webpack-template": "^4.0.0",
+    "json-loader": "^0.5.4",
     "npm-install-webpack-plugin": "^3.0.0",
     "remove-markdown": "^0.1.0",
     "style-loader": "^0.13.1",

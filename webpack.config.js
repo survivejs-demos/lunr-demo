@@ -12,7 +12,8 @@ const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build'),
-  style: path.join(__dirname, 'app/main.css')
+  style: path.join(__dirname, 'app/main.css'),
+  searchIndex: path.join(__dirname, 'app/search_index.json')
 };
 
 process.env.BABEL_ENV = TARGET;
@@ -35,6 +36,11 @@ const common = {
         test: /\.jsx?$/,
         loaders: ['babel?cacheDirectory'],
         include: PATHS.app
+      },
+      {
+        test: /\.json?$/,
+        loaders: ['json'],
+        include: PATHS.searchIndex
       }
     ]
   },
