@@ -1,4 +1,4 @@
-# lunr-demo - Demo showing how to use lunr with Webpack `require.ensure`
+# lunr-demo - Demo showing how to use lunr with React and Webpack `require.ensure`
 
 This little demonstration shows you how to use [lunr](http://lunrjs.com/), [React](https://facebook.github.io/react), and [Webpack](https://webpack.github.io/) to implement static, dynamically loaded search for web. This is useful for small scale usage (think static sites).
 
