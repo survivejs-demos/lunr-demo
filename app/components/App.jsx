@@ -89,12 +89,12 @@ function loadIndex() {
   // Here's the magic. Set up `require.ensure` to tell Webpack
   // to split here and load our search index dynamically.
   //
-  // Our search index depends on lunr search so we need to
-  // mark that as a dependency in the first parameter. If we
-  // didn't have any dependencies, we would leave it as [].
+  // The first parameter defines possible dependencies that
+  // must be loaded first. Given there aren't any, we will
+  // leave it as an empty array.
   return new Promise((resolve, reject) => {
     try {
-      require.ensure(['lunr', '../search_index.json'], require => {
+      require.ensure([], require => {
         const lunr = require('lunr');
         const search = require('../search_index.json');
 
