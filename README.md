@@ -12,4 +12,3 @@ This little demonstration shows you how to use [lunr](http://lunrjs.com/), [Reac
 ## License
 
 MIT.
-
