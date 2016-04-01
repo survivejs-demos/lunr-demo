@@ -18,17 +18,18 @@ function main() {
 
 function generateIndex(files) {
   const index = lunr(function() {
+    this.ref('id');
     this.field('title', {
       boost: 10 // Match title results before the rest
     });
     this.field('body');
-    this.ref('id');
   });
 
-  files.forEach(function(file) {
+  files.forEach(function(file, i) {
     const lines = file.split('\n');
 
     index.add({
+      id: i, // This should be something unique. Url slug for example.
       title: removeMarkdown(lines[0]),
       body: removeMarkdown(lines.slice(1).join('\n'))
     });
