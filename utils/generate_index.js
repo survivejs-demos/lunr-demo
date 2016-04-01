@@ -4,36 +4,37 @@ const path = require('path');
 const lunr = require('lunr');
 const removeMarkdown = require('remove-markdown');
 
-const readmePath = path.resolve(__dirname, '..', 'README.md');
-
 main();
 
 function main() {
-  console.log(JSON.stringify(generateIndex([
+  const readmePath = path.resolve(__dirname, '..', 'README.md');
+
+  console.log(JSON.stringify(generateIndex(
     fs.readFileSync(readmePath, {
       encoding: 'utf-8'
     })
-  ]).toJSON()));
+  )));
 }
 
-function generateIndex(files) {
+function generateIndex(file) {
+  // Skip index and empty lines.
+  const lines = file.split('\n').slice(1).filter(id).map(removeMarkdown);
   const index = lunr(function() {
     this.ref('id');
-    this.field('title', {
-      boost: 10 // Match title results before the rest
-    });
-    this.field('body');
+    this.field('line');
   });
 
-  files.forEach(function(file, i) {
-    const lines = file.split('\n');
-
+  lines.forEach(function(line, i) {
     index.add({
-      id: i, // This should be something unique. Url slug for example.
-      title: removeMarkdown(lines[0]),
-      body: removeMarkdown(lines.slice(1).join('\n'))
+      id: i, // Line number
+      line: line
     });
   });
 
-  return index;
+  return {
+    lines: lines,
+    index: index
+  };
 }
+
+function id(a) {return a;};
