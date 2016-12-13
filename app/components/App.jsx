@@ -93,19 +93,16 @@ function loadIndex() {
   // must be loaded first. Given there aren't any, we will
   // leave it as an empty array.
   return new Promise((resolve, reject) => {
-    try {
-      require.ensure([], require => {
-        const lunr = require('lunr');
-        const search = require('../search_index.json');
+    // This can be replaced with `import` in webpack 2. That would return
+    // a Promise and give proper error handling unlike `require.ensure`.
+    require.ensure([], require => {
+      const lunr = require('lunr');
+      const search = require('../search_index.json');
 
-        resolve({
-          index: lunr.Index.load(search.index),
-          lines: search.lines
-        });
+      resolve({
+        index: lunr.Index.load(search.index),
+        lines: search.lines
       });
-    }
-    catch(err) {
-      reject(err);
-    }
+    });
   });
 }
