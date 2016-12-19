@@ -71,7 +71,11 @@ export default class App extends React.Component {
   }
   search(lines, index, query) {
     // Search against index and match README lines against the results.
-    return index.search(query.trim()).map(match => lines[match.ref]);
+    return index.search(
+      query.trim()
+    ).map(
+      match => lines[match.ref]
+    );
   }
 };
 
@@ -86,23 +90,18 @@ const Results = ({results}) => {
 };
 
 function loadIndex() {
-  // Here's the magic. Set up `require.ensure` to tell Webpack
+  // Here's the magic. Set up `import` to tell Webpack
   // to split here and load our search index dynamically.
   //
-  // The first parameter defines possible dependencies that
-  // must be loaded first. Given there aren't any, we will
-  // leave it as an empty array.
-  return new Promise((resolve, reject) => {
-    // This can be replaced with `import` in webpack 2. That would return
-    // a Promise and give proper error handling unlike `require.ensure`.
-    require.ensure([], require => {
-      const lunr = require('lunr');
-      const search = require('../search_index.json');
-
-      resolve({
-        index: lunr.Index.load(search.index),
-        lines: search.lines
-      });
-    });
+  // Note that you will need to shim Promise.all for
+  // older browsers and Internet Explorer!
+  return Promise.all([
+    import('lunr'),
+    import('../search_index.json')
+  ]).then(([lunr, search]) => {
+    return {
+      index: lunr.Index.load(search.index),
+      lines: search.lines
+    };
   });
 }
