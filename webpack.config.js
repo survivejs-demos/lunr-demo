@@ -31,12 +31,10 @@ const common = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true
-          }
-        }],
+        use: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        },
         include: PATHS.app
       }
     ]
