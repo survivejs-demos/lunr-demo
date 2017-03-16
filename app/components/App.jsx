@@ -14,7 +14,7 @@ export default class App extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
   render() {
-    const results = this.state.results;
+    const { results, value } = this.state;
 
     return (
       <div className="app-container">
@@ -22,7 +22,7 @@ export default class App extends React.Component {
           <label>Search against README:</label>
           <input
             type="text"
-            value={this.state.value}
+            value={value}
             onChange={this.onChange} />
         </div>
         <div className="results-container">
@@ -31,49 +31,34 @@ export default class App extends React.Component {
       </div>
     );
   }
-  onChange(e) {
-    const value = e.target.value;
-    const index = this.state.index;
-    const lines = this.state.lines;
+  onChange({ target: { value } }) {
+    const { index, lines } = this.state;
 
     // Set captured value to input
-    this.setState({
-      value
-    });
+    this.setState(() => ({ value }));
 
     // Search against lines and index if they exist
     if(lines && index) {
-      this.setState({
-        results: this.search(lines, index, value)
-      });
-
-      return;
+      return this.setState(() => ({
+        results: this.search(lines, index, value),
+      }));
     }
 
-    // If the index doesn't exist, we need to set it up.
-    // Unfortunately we cannot pass the path so we need to
-    // hardcode it (Webpack uses static analysis).
-    //
+    // If the index doesn't exist, it has to be set it up.
     // You could show loading indicator here as loading might
     // take a while depending on the size of the index.
-    loadIndex().then(lunr => {
+    loadIndex().then(({ index, lines }) => {
       // Search against the index now.
-      this.setState({
-        index: lunr.index,
-        lines: lunr.lines,
-        results: this.search(lunr.lines, lunr.index, value)
-      });
-    }).catch(err => {
-      // Something unexpected happened (connection lost
-      // for example).
-      console.error(err);
-    });
+      this.setState(() => ({
+        index,
+        lines,
+        results: this.search(lines, index, value),
+      }));
+    }).catch(err => console.error(err));
   }
   search(lines, index, query) {
-    // Search against index and match README lines against the results.
-    return index.search(
-      query.trim()
-    ).map(
+    // Search against index and match README lines.
+    return index.search(query.trim()).map(
       match => lines[match.ref]
     );
   }
@@ -98,10 +83,10 @@ function loadIndex() {
   return Promise.all([
     import('lunr'),
     import('../search_index.json')
-  ]).then(([lunr, search]) => {
+  ]).then(([{ Index }, { index, lines }]) => {
     return {
-      index: lunr.Index.load(search.index),
-      lines: search.lines
+      index: Index.load(index),
+      lines,
     };
   });
 }
