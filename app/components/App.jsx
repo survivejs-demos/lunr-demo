@@ -8,7 +8,7 @@ export default class App extends React.Component {
       index: null,
       value: '',
       lines: [],
-      results: []
+      results: [],
     };
 
     this.onChange = this.onChange.bind(this);
@@ -59,7 +59,7 @@ export default class App extends React.Component {
   search(lines, index, query) {
     // Search against index and match README lines.
     return index.search(query.trim()).map(
-      match => lines[match.ref]
+      match => lines[match.ref],
     );
   }
 };
