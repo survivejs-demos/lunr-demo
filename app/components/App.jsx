@@ -10,8 +10,6 @@ export default class App extends React.Component {
       lines: [],
       results: [],
     };
-
-    this.onChange = this.onChange.bind(this);
   }
   render() {
     const { results, value } = this.state;
@@ -23,7 +21,7 @@ export default class App extends React.Component {
           <input
             type="text"
             value={value}
-            onChange={this.onChange} />
+            onChange={e => this.onChange(e)} />
         </div>
         <div className="results-container">
           <Results results={results} />
