@@ -22,12 +22,12 @@ function generateIndex(file) {
   const index = lunr(function() {
     this.ref('id');
     this.field('line');
-  });
 
-  lines.forEach(function(line, i) {
-    index.add({
-      id: i, // Line number
-      line: line
+    lines.forEach((line, i) => {
+      this.add({
+        id: i, // Line number
+        line: line
+      });
     });
   });
 

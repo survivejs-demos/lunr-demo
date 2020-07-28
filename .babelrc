@@ -1,19 +1,16 @@
 {
-  "plugins": ["syntax-dynamic-import"],
   "presets": [
     [
-      "es2015",
+      "@babel/preset-env",
       {
         "modules": false
       }
     ],
-    "react"
+    "@babel/preset-react"
   ],
   "env": {
-    "start": {
-      "presets": [
-        "react-hmre"
-      ]
+    "development": {
+      "plugins": ["react-refresh/babel"]
     }
   }
 }
