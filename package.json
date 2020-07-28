@@ -6,6 +6,7 @@
     "deploy": "gh-pages -d build",
     "stats": "webpack --env build --profile --json > stats.json",
     "build": "webpack --env build",
+    "prestart": "npm run generate_index",
     "start": "webpack-dev-server --env start",
     "generate_index": "node ./utils/generate_index.js > app/search_index.json"
   },
